@@ -1,0 +1,32 @@
+{% extends 'djangoapp/navbar.html' %}
+
+{% block title %}Contac{% endblock %}
+
+{% block content %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Contact us</h1>
+   
+    
+  </div>
+  <div>
+    <form>
+      <div class="form-group">
+        <label for="textName">Name</label>
+        <input type="text" class="form-control" id="textName" aria-describedby="your name" placeholder="Enter your name">
+        
+      </div>
+      <div class="form-group">
+        <label for="emailAddress">Email Address</label>
+        <input class="form-control" id="emailAddress" type="email" placeholder="Email Address" data-sb-validations="required,email" />
+        
+      </div>
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea class="form-control" id="message" type="text" placeholder="Message" style="height: 10rem;" data-sb-validations="required"></textarea>
+      </div>
+      <div class="d-grid ">
+      <button type="submit" class="btn btn-primary btn-block">Submit</button>
+    </div>
+    </form>
+  </div>
+{% endblock %}
