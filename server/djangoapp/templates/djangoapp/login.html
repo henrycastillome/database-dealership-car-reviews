@@ -1,0 +1,41 @@
+{% extends 'djangoapp/navbar.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="col-sm-4 mx-auto pt-4">
+
+    <div class="card">
+        <article class="card-body">
+            <a href="" class="float-right btn btn-outline-primary">Sign up</a>
+            <h4 class="card-title mb-4 mt-1">Sign in</h4>
+            <form action="{% url 'djangoapp:login' %}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input name="username" class="form-control" placeholder="username" type="text" name="username">
+                </div> <!-- form-group// -->
+                <div class="form-group">
+                    <a class="float-right" href="#">Forgot?</a>
+                    <label for="psw">Your password</label>
+                    <input class="form-control" placeholder="******" type="password" name="psw">
+                </div> <!-- form-group// -->
+                {% if message %}
+                <div class="alert alert-warning"> <!--Style the message paragraph with .alert and .alert-warning class -->
+                  {{ message }}
+                </div>
+              {% endif %}
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label> <input type="checkbox"> Save password </label>
+                    </div> <!-- checkbox .// -->
+                </div> <!-- form-group// -->
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block"> Login </button>
+                </div> <!-- form-group// -->
+            </form>
+        </article>
+    </div> <!-- card.// -->
+
+</div> <!-- col.// -->
+{% endblock %}
