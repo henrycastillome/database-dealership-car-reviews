@@ -18,24 +18,23 @@ const params={
 
 
 async function main() {
-     try{
-         const validAccess= await authentication(params);
-         let dbDetails= await validAccess.postAllDocs({db:'dealerships', includeDocs:true})
-         return {"body": dbDetails.result.rows }
-         
-     } catch(error){
-         return {body:{error:error.description}}
-     }
-     
+    try{
+       const validAccess= await authentication(params);
+       let dbDetails= await validAccess.postAllDocs({db:'dealerships',limit:20, includeDocs:true})
+       return {"body": dbDetails.result.rows }
+       
+   } catch(error){
+       return {body:{error:error.description}}
+   }
 }
+
+function authentication(params){
+  const authenticator= new IamAuthenticator({ apikey: params.IAM_API_KEY })
+  const cloudant= CloudantV1.newInstance({
+      authenticator:authenticator
+  })
+  cloudant.setServiceUrl(params.COUCH_URL);
+
  
- function authentication(params){
-    const authenticator= new IamAuthenticator({ apikey: params.IAM_API_KEY })
-    const cloudant= CloudantV1.newInstance({
-        authenticator:authenticator
-    })
-    cloudant.setServiceUrl(params.COUCH_URL);
- 
-   
-    return cloudant;
+  return cloudant;
 }

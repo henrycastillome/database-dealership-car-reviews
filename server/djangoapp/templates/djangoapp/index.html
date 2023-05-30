@@ -4,7 +4,28 @@
 
 {% block content %}
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-    <h1 class="display-4">Welcome to homepage</h1>
-    
+  <h1 class="display-4">Welcome to homepage</h1>
+</div>
+<div class="container">
+  <div class="row">
+    {% for dealer in dealers %}
+
+    <div class="col-sm-6 pb-3">
+      <div class="card ">
+        <div class="card-body">
+          <h5 class="card-title">{{dealer.full_name}}</h5>
+          <p class="card-text">{{dealer.address}}, {{dealer.city}}, {{dealer.st}}, {{dealer.zip}}</p>
+          <a href="#" class="btn btn-primary">Visit Website</a>
+        </div>
+      </div>
+
+    </div>
+
+
+    <br>
+    {% endfor %}
   </div>
+</div>
+
+
 {% endblock %}

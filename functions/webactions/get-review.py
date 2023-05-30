@@ -14,6 +14,7 @@ from ibm_cloud_sdk_core import ApiException
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 import os
 import requests
+import asyncio
 
 param={
     "COUCH_URL":os.environ.get('COUCH_URL'),
@@ -28,21 +29,18 @@ def authentication(param_dict):
     return client
 
 
-def main(argv=None):
-    
+async def main(argv=None):
     try:
-        client= authentication(param)
-        response= client.post_all_docs(db='reviews', include_docs=True).get_result()
+        client = authentication(param)
+        response = await asyncio.to_thread(client.post_all_docs, db='reviews', include_docs=True).get_result()
         print(response)
-    
+        return {'body': response['rows']}
     except ApiException as cloudant_exception:
         print('unable to connect')
-        return {'error': cloudant_exception }
-    
+        return {'error': cloudant_exception}
     except (requests.exceptions.RequestException, ConnectionResetError) as err:
-        print('coneection error')
+        print('connection error')
         return {'error': err}
-        
     
     
         
