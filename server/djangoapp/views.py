@@ -93,6 +93,17 @@ def get_dealerships(request):
 
         return render(request, 'djangoapp/index.html', context={'dealers':dealerships})
 
+def get_dealer_state(request):
+    context={}
+    if request.method=='GET':
+        id={"state":"Colorado"}
+        url='https://us-east.functions.appdomain.cloud/api/v1/web/bb38ac2a-c860-4a62-9d45-c9c576b3a2d0/dealership-package/get-dealership-id'
+        dealerships=get_dealers_by_state(url,id)
+        response=" ".join([response.full_name for response in dealerships if response.full_name is not None])
+
+        return HttpResponse(response)
+
+
 def get_dealer_details(request):
     context={}
     if request.method=="GET":
@@ -101,6 +112,17 @@ def get_dealer_details(request):
         review_name=" ".join([rev.purchase_date for rev in reviews if rev.purchase_date is not None])
 
         return HttpResponse(review_name)
+    
+def get_dealer_review(request, id):
+    context={}
+    if request.method=="GET":
+        url='https://us-east.functions.appdomain.cloud/api/v1/web/bb38ac2a-c860-4a62-9d45-c9c576b3a2d0/dealership-package/get-review-id'
+        id={"id":id}
+        reviews=get_dealer_review_id(url, id)
+        review_detail=" ".join([detail.review for detail in reviews if detail.review is not None])
+
+        return HttpResponse(review_detail)
+
 
 # Create a `get_dealer_details` view to render the reviews of a dealer
 # def get_dealer_details(request, dealer_id):

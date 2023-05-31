@@ -38,3 +38,29 @@ function authentication(params){
  
   return cloudant;
 }
+
+// get dealership by state
+async function main(st) {
+  try{
+     const validAccess= await authentication(param);
+    
+     const selector={state:st.state}
+    
+     let dbDetails= await validAccess.postFind({db:'dealerships',selector:selector})
+     return {"body": dbDetails.result.docs }
+     
+ } catch(error){
+     return {body:{error:error.description}}
+ }
+}
+
+function authentication(params){
+const authenticator= new IamAuthenticator({ apikey: params.IAM_API_KEY })
+const cloudant= CloudantV1.newInstance({
+    authenticator:authenticator
+})
+cloudant.setServiceUrl(params.COUCH_URL);
+
+
+return cloudant;
+}

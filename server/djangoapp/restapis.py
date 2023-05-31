@@ -6,7 +6,7 @@ from requests.auth import HTTPBasicAuth
 
 
 
-def get_requests(url,**kwargs):
+def get_requests(url,kwargs):
     print(kwargs)
     print("GET from {}".format(url))
     response=None
@@ -46,6 +46,23 @@ def get_dealers(url, **kwargs):
 
     return results
 
+def get_dealers_by_state(url, state):
+    result=[]
+    
+    json_results= get_requests(url, state)
+    if json_results:
+
+        for dealers in json_results:
+            dealer_object= CarDealer(id=dealers['id'], 
+                                     full_name=dealers['full_name'], 
+                                     address=dealers['address'], 
+                                     city=dealers['city'], 
+                                     st=dealers['st'],
+                                     zip=dealers['zip'])
+            result.append(dealer_object)
+
+        return result
+
 def get_dealers_reviews(url, **kwargs):
     results=[]
     json_results=get_requests(url)
@@ -67,6 +84,27 @@ def get_dealers_reviews(url, **kwargs):
     
     return results
 
+
+def get_dealer_review_id(url, id):
+    results=[]
+    json_results=get_requests(url, id)
+
+    if json_results:
+        for reviews in json_results:
+            
+            
+            review_object= DealerReview(dealership=reviews['dealership'],
+                                        name=reviews['name'],
+                                        purchase=reviews['purchase'],
+                                        review=reviews['review'],
+                                        purchase_date=reviews.get('purchase_date'),
+                                        car_make=reviews.get('car_make'),
+                                        car_model=reviews.get('car_model'),
+                                        car_year=reviews.get('car_year'),
+                                        review_id=str(reviews['review_id']),)
+            results.append(review_object)
+    
+    return results
 
 
 

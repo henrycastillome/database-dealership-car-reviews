@@ -49,6 +49,32 @@ async def main(argv=None):
     
 
     
+
+def authentication(param_dict):
+    authenticator=IAMAuthenticator(param_dict["IAM_API_KEY"])
+    client=CloudantV1(authenticator=authenticator)
+    client.set_service_url(param_dict['COUCH_URL'])
     
+    return client
+
+## Get review by id
+def main(dealership):
+    
+    try:
+        client= authentication(param)
+        dealership_id=int(dealership.get('id'))
+        selector={"dealership": dealership_id}
+        response= client.post_find(db='reviews', selector=selector).get_result()
+        print(response)
+        return { 'body': response['docs'] }
+    
+    except ApiException as cloudant_exception:
+        print('unable to connect')
+        return {'error': cloudant_exception }
+    
+    except (requests.exceptions.RequestException, ConnectionResetError) as err:
+        print('coneection error')
+        return {'error': err}
+        
 
 
