@@ -1,18 +1,155 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Dealership Review</title>
-    {% load static %}
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-</head>
+{% extends 'djangoapp/navbar.html' %}
 
-    <body>
+{% block title %}Home{% endblock %}
 
-    <!--Add a nav bar here -->
+{% block content %}
+{% for dealer in dealerships%}
+<section>
+    <div class="py-5">
+        <div class="row">
+            <div class="col">
 
-    <!-- Add reviews as cards -->
+                <nav aria-label="breadcrumb" class="rounded-3 p-3 mb-4">
+                    <ol class="breadcrumb mb-0" style="background: none;">
+                        <li class="breadcrumb-item"><a href="{% url 'djangoapp:index' %}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'djangoapp:index' %}">Dealership</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{dealer.full_name}}</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
 
-    </body>
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card mb-4">
+                    <div class="card-body text-center">
+                        <img src="https://loremflickr.com/320/240/car/all" alt="avatar" class="rounded-circle img-fluid"
+                            style="width: 150px;">
+                        <h5 class="my-1">{{dealer.full_name}}</h5>
+                        <p class="text-muted mb-3">{{dealer.city}}, {{dealer.st}}</p>
+                        <div class="d-flex justify-content-center mb-2" style="gap: 0.5rem">
+                            <button type="button" class="btn btn-primary ">Website</button>
+                            <button type="button" class="btn btn-outline-primary ms-1">Write a review</button>
+                        </div>
+                    </div>
+                </div>
 
-</html>
+            </div>
+            <div class="col-lg-8">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Dealership</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">{{dealer.full_name}}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Address</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">{{dealer.address}}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">City</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">{{dealer.city}}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">State</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">{{dealer.st}}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Zip Code</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">{{dealer.zip}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-8">
+                        <h5 class="my-1">Reviews</h5>
+                    </div>
+                    {% if reviews %}
+                    {% for review in reviews %}
+                    <section class="p-4 p-md-5 text-center text-lg-start shadow-1-strong rounded">
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-md-10">
+                                <div class="card">
+                                    <div class="card-body m-3">
+                                        <div class="row">
+                                            <div
+                                                class="col-lg-4 d-flex justify-content-center align-items-center mb-4 mb-lg-0">
+                                                <img src="https://i.pravatar.cc/150"
+                                                    class="rounded-circle img-fluid shadow-1" alt="woman avatar"
+                                                    width="200" height="200" />
+                                            </div>
+                                            <div class="col-lg-8">
+                                                <p class="text-muted fw-light mb-4">
+                                                    {{review.review}}
+                                                </p>
+                                                <p class="fw-bold lead mb-2"><strong>{{review.name}}</strong></p>
+                                                {% if review.purchase %}
+                                                <p class="fw-bold text-muted mb-0"><b>Purchase date:</b> {{review.purchase_date}}</p>
+                                                <p class="fw-bold text-muted mb-0"><b>Car info: </b> {{review.car_make}} {{review.car_model}} - {{review.car_year}}</p>
+                                                <p class="fw-bold text-muted mb-0"><b>Sentiment: </b> {{review.sentiment}}</p>
+                                                {% else %}
+                                                <p class="fw-bold text-muted mb-0">No purchase made</p>
+                                                <p class="fw-bold text-muted mb-0"><b>Sentiment: </b> {{review.sentiment}}</p>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    {% endfor %}
+                    {% else %}
+                    <section class="p-4 p-md-5 text-center text-lg-start shadow-1-strong rounded">
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-md-10">
+                                <div class="card">
+                                    <div class="card-body m-3">
+                                        <div class="row">
+                                            <div
+                                                class="col-lg-4 d-flex justify-content-center align-items-center mb-4 mb-lg-0">
+                                                <img src="https://picsum.photos/id/237/400"
+                                                    class="rounded-circle img-fluid shadow-1" alt="sad dog"
+                                                    width="600" height="600" />
+                                            </div>
+                                            <div class="col-lg-8 d-flex justify-content-center align-items-center mb-4 mb-lg-0">
+                                                <h5 class="my-1">No Reviews yet &#128546</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+</section>
+{% endfor %}
+
+{% endblock %}

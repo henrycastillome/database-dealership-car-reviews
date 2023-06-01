@@ -15,15 +15,16 @@
         <div class="card-body">
           <h5 class="card-title">{{dealer.full_name}}</h5>
           <p class="card-text">{{dealer.address}}, {{dealer.city}}, {{dealer.st}}, {{dealer.zip}}</p>
-          <a href="#" class="btn btn-primary">Visit Website</a>
+          <a href="{% url 'djangoapp:dealer_details' id=dealer.id %}" class="btn btn-primary">View info</a>
         </div>
+        
       </div>
 
     </div>
 
 
     <br>
-    {% endfor %}
+   {% endfor %}
   </div>
 </div>
 

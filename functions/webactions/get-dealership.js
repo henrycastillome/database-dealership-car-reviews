@@ -64,3 +64,33 @@ cloudant.setServiceUrl(params.COUCH_URL);
 
 return cloudant;
 }
+
+
+
+//get dealership by id
+
+async function main(st) {
+    try{
+       const validAccess= await authentication(param);
+       const id= parseInt(st.id)
+      
+       const selector={id:id}
+      
+       let dbDetails= await validAccess.postFind({db:'dealerships',selector:selector})
+       return {"body": dbDetails.result.docs }
+       
+   } catch(error){
+       return {body:{error:error.description}}
+   }
+}
+
+function authentication(params){
+  const authenticator= new IamAuthenticator({ apikey: params.IAM_API_KEY })
+  const cloudant= CloudantV1.newInstance({
+      authenticator:authenticator
+  })
+  cloudant.setServiceUrl(params.COUCH_URL);
+
+ 
+  return cloudant;
+}
