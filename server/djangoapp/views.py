@@ -153,7 +153,19 @@ def search_dealer(request):
 
         return render(request, 'djangoapp/result.html', context=context)
 
-   
+def stats_count(request, dict):
+    context={}
+    if request.method=='GET':
+        url='https://us-east.functions.appdomain.cloud/api/v1/web/bb38ac2a-c860-4a62-9d45-c9c576b3a2d0/dealership-package/get-dealership'
+        dealerships=get_dealers(url)
+        count=0
+        for key, value in dealerships.items():
+            count +=1
+       
+    
+        context['dealerships']=count
+
+        return render(request, 'djangoapp/index.html', context=context)
 
 
 # Create a `get_dealer_details` view to render the reviews of a dealer

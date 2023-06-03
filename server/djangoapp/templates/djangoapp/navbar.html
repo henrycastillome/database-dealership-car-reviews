@@ -21,13 +21,13 @@
     />
     <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.js"></script>
     <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
-   
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.3.1/css/all.min.css" rel="stylesheet">
   </head>
   <body>
     <div
       class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 bg-white border-bottom box-shadow"
     >
-      <h5 class="my-0 mr-md-auto font-weight-normal">Car Dealership</h5>
+      <h5 class="my-0 mr-md-auto font-weight-normal">CarDealershipReview</h5>
       <nav class="my-2 my-md-0 mr-md-3">
         <a class="p-2 text-dark" href="{% url 'djangoapp:index' %}">Home</a>
         <a class="p-2 text-dark" href="{% url 'djangoapp:about' %}">About us</a>
@@ -44,8 +44,8 @@
 
       
       <nav>
-        <a class="btn btn-primary" href="{% url 'djangoapp:login' %}">Log in</a>
-        <a class="btn btn-outline-primary" href="{% url 'djangoapp:registration' %}">Sign Up</a>
+        <a class="btn btn-primary btn-rounded" href="{% url 'djangoapp:login' %}">Log in</a>
+        <a class="btn btn-outline-primary btn-rounded" href="{% url 'djangoapp:registration' %}">Sign Up</a>
       </nav>
       {% endif %}
    
@@ -53,9 +53,9 @@
 
     <div  >{% block content %}{% endblock %}</div>
 
-    <section style="min-height: 100vh;">
+    
       <!-- Footer -->
-      <footer class="fixed-bottom text-center text-white" style="background-color: var(--primary-blue);">
+      <footer class=" text-center text-white" style="background-color: var(--primary-blue);">
         <!-- Grid container -->
         <div class="container p-4 pb-0">
           <!-- Section: CTA -->
@@ -80,7 +80,7 @@
         <!-- Copyright -->
       </footer>
       <!-- Footer -->
-    </section>
+    
     <script>
       // getting the year for the footer
       const date= new Date ()
