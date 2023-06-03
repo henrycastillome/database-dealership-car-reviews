@@ -130,6 +130,31 @@ def get_dealer_review(request, id):
 
         return render(request, 'djangoapp/dealer_details.html', context={"reviews":reviews, "dealerships":dealerships})
 
+def search_dealer(request):
+    context = {}
+    if request.method == "GET":
+        keyword= request.GET.get('search', ' ')
+        url='https://us-east.functions.appdomain.cloud/api/v1/web/bb38ac2a-c860-4a62-9d45-c9c576b3a2d0/dealership-package/get-dealership'
+        dealerships=get_dealers(url)
+        results=[]
+
+        for dealer in dealerships:
+            if keyword.lower() in dealer.full_name.lower() or \
+               keyword.lower() in dealer.st.lower() or \
+               keyword.lower() in dealer.state.lower() or \
+               keyword.lower() in dealer.city.lower():
+                results.append(dealer)
+
+        context['dealers']=results
+        context['keyword']=keyword
+        
+        
+        
+
+        return render(request, 'djangoapp/result.html', context=context)
+
+   
+
 
 # Create a `get_dealer_details` view to render the reviews of a dealer
 # def get_dealer_details(request, dealer_id):

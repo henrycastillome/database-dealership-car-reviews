@@ -3,10 +3,8 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-
-{% if user.is_authenticated %}
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-  <h1 class="display-4">Welcome {{ user.first_name }}!</h1>
+  <h1 class="display-4">Welcome to homepage</h1>
 </div>
 
 
@@ -14,6 +12,7 @@
 <div class="container">
   <div class="row">
     <div class="col-12">
+
       <form method="get" action="{% url 'djangoapp:search_result'  %}">
         <div class="input-group input-group-lg mb-3">
           <input type="search" value="{{ request.GET.search }}" name='search' class="form-control"
@@ -27,7 +26,15 @@
     </div>
 
   </div>
+  {% if keyword %}
+  <h2> Results for: {{keyword}}</h2>
+
+  {% endif %}
+
+  {% if dealers %}
   <div class="row">
+
+
     {% for dealer in dealers %}
 
     <div class="col-sm-6 pb-3">
@@ -41,34 +48,32 @@
       </div>
 
     </div>
-
-
     <br>
     {% endfor %}
+
+
+    {% else %}
+
+    <p> No results</p>
+
+
+
+
+
+
+  </div>
+  {% endif %}
+
+
+
+</div>
+<div class="container">
+  <div class="row">
+    
+      <a href="{% url 'djangoapp:index' %}" >Back to all dealerships</a>
+    
   </div>
 </div>
 
-{% else %}
-
-{% load static %}
-  <div class="hero" >
-
-  
-    <!-- <div class="col-sm-4 ">
-      <img width="400px" class='rounded img-fluid' src="{{ MEDIA_URL }}dealer_images/dogimage.jpg" >
-     
-    </div> -->
-
-  
-
-  </div>
-
-
-
-
-
-
-
-{% endif %}
 
 {% endblock %}

@@ -1,13 +1,17 @@
+
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    {% load static %}
+
     <title>{% block title %}{% endblock %}</title>
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     />
+    <link  href="{% static 'djangoapp/front.css' %}" rel="stylesheet" type="text/css">
+
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -17,30 +21,11 @@
     />
     <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.js"></script>
     <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
-    <style>
-      .valid{
-        color: green;
-        font-size: small;
-      }
-      .valid:before{
-        content: "✔Valid match" ;
-      }
-      .invalid{
-        color:red;
-        font-size: small;
-      }
-      .invalid:before{
-        content: "✖ Both password must match";
-      }
-      #error{
-        display: none;
-      }
-     
-  </style>
+   
   </head>
   <body>
     <div
-      class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow"
+      class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 bg-white border-bottom box-shadow"
     >
       <h5 class="my-0 mr-md-auto font-weight-normal">Car Dealership</h5>
       <nav class="my-2 my-md-0 mr-md-3">
@@ -66,6 +51,42 @@
    
     </div>
 
-    <div class="container">{% block content %}{% endblock %}</div>
+    <div  >{% block content %}{% endblock %}</div>
+
+    <section style="min-height: 100vh;">
+      <!-- Footer -->
+      <footer class="fixed-bottom text-center text-white" style="background-color: var(--primary-blue);">
+        <!-- Grid container -->
+        <div class="container p-4 pb-0">
+          <!-- Section: CTA -->
+          <section class="">
+            <p class="d-flex justify-content-center align-items-center">
+              <span class="me-3 pr-1">Register for free</span>
+              <a href="{% url 'djangoapp:registration' %}"><button type="button" class="btn btn-outline-light btn-rounded"> 
+                Sign up!
+              </button>
+            </a>
+            </p>
+          </section>
+          <!-- Section: CTA -->
+        </div>
+        <!-- Grid container -->
+    
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+          © <span id="year"></span> Copyright:
+          <a class="text-white" href="https://henrycastillo.dev/">henrycastillo.dev</a>
+        </div>
+        <!-- Copyright -->
+      </footer>
+      <!-- Footer -->
+    </section>
+    <script>
+      // getting the year for the footer
+      const date= new Date ()
+      const year=date.getFullYear()
+      document.getElementById('year').innerHTML=year
+
+    </script>
   </body>
 </html>

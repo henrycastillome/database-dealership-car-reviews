@@ -3,10 +3,15 @@ import json
 from .models import CarDealer, DealerReview
 from requests.auth import HTTPBasicAuth
 import os
+from dotenv import load_dotenv
 from ibm_watson import NaturalLanguageUnderstandingV1
+from ibm_cloud_sdk_core import ApiException
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 from ibm_watson.natural_language_understanding_v1 \
     import Features, EntitiesOptions, KeywordsOptions
+
+
+load_dotenv()
 
 param_nlu={
     "NLU_API_KEY":os.environ.get('NLU_API_KEY'),
@@ -40,14 +45,31 @@ def get_requests(url,kwargs=None, api_key=None):
     return None
 
 def analyze_review_sentiments(review):
-    authenticator=IAMAuthenticator(param_nlu['NLU_API_KEY'])
-    service=NaturalLanguageUnderstandingV1(version='2002-04-07', authenticator=authenticator)
-    service.set_service_url(param_nlu['NLU_URL'])
-    response = service.analyze(text=review,  features=Features(
-                      keywords=KeywordsOptions(emotion=True, sentiment=True))).get_result()
-    sentiment=response['keywords'][0]['sentiment']['label']
 
-    return sentiment
+    try:
+        authenticator=IAMAuthenticator(param_nlu['NLU_API_KEY'])
+        service=NaturalLanguageUnderstandingV1(version='2002-04-07', authenticator=authenticator)
+        service.set_service_url(param_nlu['NLU_URL'])
+        response = service.analyze(text=review,  features=Features(
+                        keywords=KeywordsOptions(emotion=True, sentiment=True))).get_result()
+        sentiment=response['keywords'][0]['sentiment']['label']
+
+        return sentiment
+    except ApiException as cloudant_exception:
+        print('unable to connect')
+        return{
+            'statusCode':500,
+            'body':json.dumps({'error':str(cloudant_exception)}),
+            'headers':{'Content-Type':'application/json'}
+        }
+    except (requests.exceptions.RequestException, ConnectionResetError) as err:
+        print('connection error')
+        return{
+            'statusCode':505,
+            'body':json.dumps({'error':str(err)}),
+            'headers':{'Content-Type':'application/json'}
+        }
+
 
 
 
@@ -64,6 +86,7 @@ def get_dealers(url, **kwargs):
                                      address=dealers['address'], 
                                      city=dealers['city'], 
                                      st=dealers['st'],
+                                     state=dealers['state'],
                                      zip=dealers['zip'])
             
             results.append(dealer_object)
@@ -82,6 +105,7 @@ def get_dealers_by_id(url, id):
                                      address=dealers['address'], 
                                      city=dealers['city'], 
                                      st=dealers['st'],
+                                     state=dealers['state'],
                                      zip=dealers['zip'])
             result.append(dealer_object)
 
@@ -134,6 +158,7 @@ def get_dealer_review_id(url, id):
             results.append(review_object)
     
     return results
+
 
 
 

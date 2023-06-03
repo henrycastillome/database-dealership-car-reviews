@@ -34,16 +34,17 @@ class CarModel(models.Model):
 
 class CarDealer:
 
-    def __init__(self, id, full_name, address, city, st, zip):
+    def __init__(self, id, full_name, address, city, st, state, zip):
         self.id = id
         self.full_name = full_name
         self.address = address
         self.city = city
         self.st = st
+        self.state=state
         self.zip = zip
 
     def __str__(self):
-        return self.full_name, self.address, self.city, self.st, self.zip
+        return self.full_name, self.address, self.city, self.st, self.state, self.zip
     
 
 
