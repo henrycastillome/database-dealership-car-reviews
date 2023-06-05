@@ -85,13 +85,36 @@ def registration_request(request):
 def get_dealerships(request):
     context = {}
     if request.method == "GET":
+        count=0
         url='https://us-east.functions.appdomain.cloud/api/v1/web/bb38ac2a-c860-4a62-9d45-c9c576b3a2d0/dealership-package/get-dealership'
         dealerships=get_dealers(url)
+        results_count=[]
+        for dealer in dealerships:
+            count +=1
+            results_count.append(count)
+       
+    
+        context['dealerships']=len(results_count)
+        context['dealers']=dealerships
+        context['users']=User.objects.count()
+
+        url_reviews='https://us-east.functions.appdomain.cloud/api/v1/web/bb38ac2a-c860-4a62-9d45-c9c576b3a2d0/dealership-package/get-review'
+        reviews=get_dealers_reviews(url_reviews)
+        count_reviews=0
+        count_result_review=[]
+
+        for count in reviews:
+            count_reviews+=1
+            count_result_review.append(count_reviews)
+        
+        context['reviews']=len(count_result_review)
+
+
         
         
         
 
-        return render(request, 'djangoapp/index.html', context={'dealers':dealerships})
+        return render(request, 'djangoapp/index.html', context=context)
 
 def get_dealer_id(request,id):
     context={}
@@ -153,19 +176,7 @@ def search_dealer(request):
 
         return render(request, 'djangoapp/result.html', context=context)
 
-def stats_count(request, dict):
-    context={}
-    if request.method=='GET':
-        url='https://us-east.functions.appdomain.cloud/api/v1/web/bb38ac2a-c860-4a62-9d45-c9c576b3a2d0/dealership-package/get-dealership'
-        dealerships=get_dealers(url)
-        count=0
-        for key, value in dealerships.items():
-            count +=1
-       
-    
-        context['dealerships']=count
 
-        return render(request, 'djangoapp/index.html', context=context)
 
 
 # Create a `get_dealer_details` view to render the reviews of a dealer

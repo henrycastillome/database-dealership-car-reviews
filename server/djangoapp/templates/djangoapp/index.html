@@ -11,7 +11,41 @@
 
 
 
-<div class="container">
+<div class="d-flex justify-content-center pb-5" style="gap: 1rem;">
+  <div class="card shadow fixed-width">
+    <div class="card-body">
+      <div class="row">
+        <div class="col text-center">
+         
+          <h6 class="card-title text-uppercase text-muted pb-1">DEALERSHIPS</h6>
+          <span class="h2 font-weight-bold mb-0 text-stat">{{dealerships}}</span>
+   
+        </div>
+       
+      </div>
+
+    </div>
+  </div>
+
+
+
+  <div class="card shadow fixed-width">
+    <div class="card-body">
+      <div class="row">
+        <div class="col text-center">
+          <h6 class="card-title text-uppercase text-muted pb-1">REVIEWS</h6>
+          <span class="h2 font-weight-bold mb-0 text-stat">{{reviews}}</span>
+        </div>
+       
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+<div class="container pb-3">
   <div class="row">
     <div class="col-12">
       <form method="get" action="{% url 'djangoapp:search_result'  %}">
@@ -79,7 +113,7 @@
 
 <section >
   <div class="stats">
-    <div class="subtitle">
+    <div class="subtitle" >
       <h2>Stats</h2>
       <p> At CarDealershipReview, we understand that purchasing a car is a significant investment, and the experience at the dealership can greatly impact your overall satisfaction. These are our stats:</p>
     </div>
@@ -87,12 +121,12 @@
    
     <div class="row ">
       <div class="col-sm d-flex justify-content-center ">
-        <div class="card shadow">
+        <div class="card shadow fixed-width">
           <div class="card-body">
             <div class="row">
-              <div class="col">
+              <div class="col text-center">
                 <h6 class="card-title text-uppercase text-muted pb-1">USERS</h6>
-                <span class="h2 font-weight-bold mb-0 text-stat">350,897</span>
+                <span class="h2 font-weight-bold mb-0 text-stat">{{users}}</span>
               </div>
              
             </div>
@@ -102,12 +136,14 @@
       </div>
 
       <div class="col-sm d-flex justify-content-center">
-        <div class="card shadow">
+        <div class="card shadow fixed-width">
           <div class="card-body">
             <div class="row">
-              <div class="col">
+              <div class="col text-center">
+               
                 <h6 class="card-title text-uppercase text-muted pb-1">DEALERSHIPS</h6>
-                <span class="h2 font-weight-bold mb-0 text-stat">350,897</span>
+                <span class="h2 font-weight-bold mb-0 text-stat">{{dealerships}}</span>
+         
               </div>
              
             </div>
@@ -117,12 +153,12 @@
       </div>
 
       <div class="col-sm d-flex justify-content-center">
-        <div class="card shadow">
+        <div class="card shadow fixed-width">
           <div class="card-body">
             <div class="row">
-              <div class="col">
+              <div class="col text-center">
                 <h6 class="card-title text-uppercase text-muted pb-1">REVIEWS</h6>
-                <span class="h2 font-weight-bold mb-0 text-stat">350,897</span>
+                <span class="h2 font-weight-bold mb-0 text-stat">{{reviews}}</span>
               </div>
              
             </div>

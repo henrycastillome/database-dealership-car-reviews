@@ -4,11 +4,27 @@
     --text-font:#004ab4;
     --dark:#444655;
  }
+ 
 body, html {
 
 height: 100%;
+
 margin: 0;
 color: var(--dark);
+}
+
+body{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main{
+    padding-bottom: 2rem;
+}
+
+footer{
+    margin-top: auto;
 }
 .valid{
 color: green;
@@ -27,6 +43,7 @@ content: "✖ Both password must match";
 #error{
 display: none;
 }
+
 
 .hero{
     width: 100%;
@@ -67,6 +84,20 @@ display: none;
     text-align: center;
 }
 
+.subtitle >h2 {
+    color: var(--text-font);
+}
+
 .text-stat{
     color: var(--text-font);
+    
+}
+
+.fixed-width{
+    width: 10rem;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
