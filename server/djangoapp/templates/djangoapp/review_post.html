@@ -1,0 +1,67 @@
+{% extends 'djangoapp/navbar.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<section>
+   
+            <form action="{% url 'djangoapp:post_review' %}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="username"> Name </label>
+                    <input name="username" class="form-control" id="username" type="text" value="{{user.first_name}} {{user.last_name}}" disabled style="font-weight: bold;">
+                </div>
+
+                <div class="form-group">
+                    <label for="dealership"> Dealership </label>
+                    <input name="username" class="form-control" id="username" type="text" value="" disabled style="font-weight: bold;">
+                </div>
+                {% for cars in car_make %}
+                <div class="form-group">
+                    <label >Car make</label>
+                    <input name="car_make" class="form-control"  list="car_make" >
+                    <datalist id="car_make">
+                        <option value="{{cars.name}}">{{cars.car_make}}</option>
+                    </datalist>
+                </div>
+                {% endfor %}
+
+                <div class="form-group">
+                    <label for="car_model">Car model</label>
+                    <input name="car_model" class="form-control" id="car_model" type="text" >
+                </div>
+
+                <div class="form-group">
+                    <label for="car_year">Car Year</label>
+                    <input name="car_year" min="1900"  max="2024" step="1" value="2016" class="form-control" id="car_year" type="number" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="purchase_date">Purchase Date</label>
+                    <input name="purchase_date" class="form-control" id="car_year" type="date" >
+                </div>
+
+                <div class="form-group">
+                    <label for="purchase">Did you make any purchase? </label>
+                    <input name="purchase" id="yes" value="yes" type="radio" >
+                    <label for="yes"> Yes </label>
+                    <input name="purchase" id="no" value="no" type="radio" >
+                    <label for="no"> No </label>
+                </div>
+
+                <div class="form-group">
+                    <label for="review"> Leave your comments here </label>
+                    <textarea class="form-control" id="review" rows="4"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <button id="submitButton" disabled type="submit" class="btn btn-primary btn-block"> Submit review </button>
+                </div>
+            </form>
+         
+  
+</section>
+
+
+{% endblock %}

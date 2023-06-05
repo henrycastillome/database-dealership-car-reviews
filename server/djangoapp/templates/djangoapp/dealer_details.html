@@ -93,18 +93,18 @@
                     <section class="p-4 p-md-5 text-center text-lg-start shadow-1-strong rounded">
                         <div class="row d-flex justify-content-center">
                             <div class="col-md-10">
-                                <div class="card">
+                                <div class="card fixed-width-review">
                                     <div class="card-body m-3">
                                         <div class="row">
                                             <div
                                                 class="col-lg-4 d-flex justify-content-center align-items-center mb-4 mb-lg-0">
-                                                <img src="https://i.pravatar.cc/150"
+                                                <img src="https://avataaars.io/?avatarStyle=Transparent&topType=WinterHat1&accessoriesType=Kurt&hatColor=Red&facialHairType=Blank&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Light"
                                                     class="rounded-circle img-fluid shadow-1" alt="woman avatar"
                                                     width="200" height="200" />
                                             </div>
                                             <div class="col-lg-8">
                                                 <p class="text-muted fw-light mb-4">
-                                                    {{review.review}}
+                                                   " {{review.review}} "
                                                 </p>
                                                 <p class="fw-bold lead mb-2"><strong>{{review.name}}</strong></p>
                                                 {% if review.purchase %}
@@ -153,3 +153,4 @@
 {% endfor %}
 
 {% endblock %}
+

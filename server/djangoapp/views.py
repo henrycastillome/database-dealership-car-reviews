@@ -116,6 +116,18 @@ def get_dealerships(request):
 
         return render(request, 'djangoapp/index.html', context=context)
 
+def post_review(request):
+    context={}
+    car_make=CarModel.objects.all()
+    context['car_make']=car_make    
+    
+    return render(request, 'djangoapp/review_post.html', context=context )
+
+
+
+
+
+
 def get_dealer_id(request,id):
     context={}
     if request.method=='GET':
