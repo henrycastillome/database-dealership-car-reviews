@@ -3,6 +3,7 @@
     --background-light:#e6f2ff; 
     --text-font:#004ab4;
     --dark:#444655;
+    --error:#FF9494
  }
  
 body, html {
@@ -112,4 +113,9 @@ display: none;
     justify-content: center;
     align-items: center;
 
+}
+
+#review_error{
+    color: red;
+    
 }
