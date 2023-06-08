@@ -14,7 +14,6 @@ import json
 logger = logging.getLogger(__name__)
 
 
-# Create your views here.
 
 
 
@@ -25,7 +24,7 @@ def about(request):
 
 
 
-# Create a `contact` view to return a static contact page
+
 def contact(request):
     context={}
     if request.method=="GET":
@@ -51,13 +50,13 @@ def login_request(request):
     else:
         return render(request, 'djangoapp/login.html', context)
 
-# Create a `logout_request` view to handle sign out request
+
 
 def logout_request(request):
     logout(request)
     return redirect('djangoapp:index')
 
-# Create a `registration_request` view to handle sign up request
+
 def registration_request(request):
     context={}
     if request.method=="GET":
@@ -81,7 +80,7 @@ def registration_request(request):
             context['message']="user already exist"
             return render(request, 'djangoapp/registration.html', context)
 
-# Update the `get_dealerships` view to render the index page with a list of dealerships
+
 def get_dealerships(request):
     context = {}
     if request.method == "GET":
@@ -116,13 +115,26 @@ def get_dealerships(request):
 
         return render(request, 'djangoapp/index.html', context=context)
 
-def post_review(request):
+def post_review(request, id):
     context={}
-    car_make=CarModel.objects.all()
-    context['car_make']=car_make    
-    
-    return render(request, 'djangoapp/review_post.html', context=context )
+    if request.method=="GET":
+        id={"id":id}
+        url='https://us-east.functions.appdomain.cloud/api/v1/web/bb38ac2a-c860-4a62-9d45-c9c576b3a2d0/dealership-package/get-dealership-id'
+        dealerships=get_dealers_by_id(url,id)
+            
+        return render(request, 'djangoapp/review_post.html', context={'dealerships':dealerships} )
 
+def get_dealer_review(request, id):
+    context={}
+    if request.method=="GET":
+        url='https://us-east.functions.appdomain.cloud/api/v1/web/bb38ac2a-c860-4a62-9d45-c9c576b3a2d0/dealership-package/get-review-id'
+        id={"id":id}
+        reviews=get_dealer_review_id(url, id)
+
+        url2='https://us-east.functions.appdomain.cloud/api/v1/web/bb38ac2a-c860-4a62-9d45-c9c576b3a2d0/dealership-package/get-dealership-id'
+        dealerships=get_dealers_by_id(url2,id)
+
+        return render(request, 'djangoapp/dealer_details.html', context={"reviews":reviews, "dealerships":dealerships})
 
 
 
@@ -149,21 +161,7 @@ def get_dealer_details(request):
         return HttpResponse(review_name)
 
     
-def get_dealer_review(request, id):
-    context={}
-    if request.method=="GET":
-        url='https://us-east.functions.appdomain.cloud/api/v1/web/bb38ac2a-c860-4a62-9d45-c9c576b3a2d0/dealership-package/get-review-id'
-        id={"id":id}
-        reviews=get_dealer_review_id(url, id)
 
-        url2='https://us-east.functions.appdomain.cloud/api/v1/web/bb38ac2a-c860-4a62-9d45-c9c576b3a2d0/dealership-package/get-dealership-id'
-        dealerships=get_dealers_by_id(url2,id)
-        
-
-
-       
-
-        return render(request, 'djangoapp/dealer_details.html', context={"reviews":reviews, "dealerships":dealerships})
 
 def search_dealer(request):
     context = {}
@@ -189,13 +187,4 @@ def search_dealer(request):
         return render(request, 'djangoapp/result.html', context=context)
 
 
-
-
-# Create a `get_dealer_details` view to render the reviews of a dealer
-# def get_dealer_details(request, dealer_id):
-# ...
-
-# Create a `add_review` view to submit a review
-# def add_review(request, dealer_id):
-# ...
 

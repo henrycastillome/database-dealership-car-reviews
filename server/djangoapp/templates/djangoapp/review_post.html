@@ -15,30 +15,32 @@
 
                 <div class="form-group">
                     <label for="dealership"> Dealership </label>
+                 
                     <input name="username" class="form-control" id="username" type="text" value="" disabled style="font-weight: bold;">
+                   
                 </div>
                 
                 <div class="form-group">
                     <label for="car_make">Car make</label>
-                    <input name="car_make"  class="form-control" id="car_make" type="text" >
+                    <input name="car_make"   class="form-control" id="car_make" type="text" >
                     <small id="car_make_error" style="color: var(--error);"></small>
                 </div>
 
                 <div class="form-group">
                     <label for="car_model">Car model</label>
-                    <input name="car_model" class="form-control" id="car_model" type="text" >
+                    <input name="car_model"  class="form-control" id="car_model" type="text" >
                     <small id="car_model_error" style="color: var(--error);"></small>
                 </div>
 
                 <div class="form-group">
                     <label for="car_year">Car Year</label>
-                    <input name="car_year"  min="1900"  max="2024" step="1" value="2016" class="form-control" id="car_year" type="number" required>
+                    <input name="car_year"   min="1900"  max="2024" step="1"  class="form-control" id="car_year" type="number" required>
                     <small id="car_year_error" style="color: var(--error);"></small>
                     
                 </div>
 
                 <div class="form-group">
-                    <label for="purchase_date">Purchase Date</label>
+                    <label for="purchase_date">When did you visit the dealership?</label>
                     <input name="purchase_date"  class="form-control" id="purchase_date" type="date" >
                     <small id="purchase_date_error" style="color: var(--error);"></small>
                 </div>
@@ -53,7 +55,7 @@
 
                 <div class="form-group">
                     <label for="review"> Leave your comments here </label>
-                    <textarea class="form-control" onblur="checkinput()" oninput="checkInput()" id="review" rows="4"></textarea>
+                    <textarea class="form-control"  id="review" rows="4"></textarea>
                     <small id="review_error"></small>
                 </div>
 
@@ -72,66 +74,138 @@
     var review=document.getElementById('review')
     var submit=document.getElementById('submitButton')
     var isValid=false
-    const required="required"
-    const year=/(19[5-9][0-9]|20[0-1][0-9]|202[0-3])/g
-
+    const YEAR=/(19[5-9][0-9]|20[0-1][0-9]|202[0-3])/
+    let isCarMakeValid=false
+    let isCarModelValid=false
+    let isCarYearValid=false
+    let isPurchaseDateValid=false
+    let isReviewValid=false
     
     
     
   
     
-    function checkEmpty(id,id_error){
-        var idToCheck= document.getElementById(id)
-       isValid=false
-        idToCheck.addEventListener('blur', function(){
-            if(idToCheck.value===""){ 
-                document.getElementById(id_error).innerHTML= required
-                document.getElementById(id).style.borderColor="var(--error)"
-                submit.disabled=true
-                
-
+    function checkEmpty(id) {
+            var idToCheck = document.getElementById(id)
+            let isValid = true
+            if (idToCheck.value === "") {
+                return isValid
+            } else {
+                return !isValid
             }
-            else if(id==='review' && idToCheck.value.length <10 ){
-                document.getElementById('review_error').innerHTML="Too short"
-                document.getElementById('review').style.borderColor="var(--error)"
-                submit.disabled=true
+        }
 
+        car_make.addEventListener('blur', function(){
+            var isCarMakeEmpty=checkEmpty('car_make')
+
+            if(isCarMakeEmpty){
+                document.getElementById('car_make_error').innerHTML= "required"
+                document.getElementById('car_make').style.borderColor="var(--error)"
+                isCarMakeValid=false
+                validate()
+            } else{
+                document.getElementById('car_make_error').innerHTML= ""
+                document.getElementById('car_make').style.borderColor=""
+                isCarMakeValid=true
+                validate()
             }
-            else if(id==='car_year' && !year.test(car_year.value.toString())){
+        })
+
+        car_model.addEventListener('blur', function(){
+            var isCarMakeEmpty=checkEmpty('car_model')
+
+            if(isCarMakeEmpty){
+                document.getElementById('car_model_error').innerHTML= "required"
+                document.getElementById('car_model').style.borderColor="var(--error)"
+                isCarModelValid=false
+                validate()
+            } else{
+                document.getElementById('car_model_error').innerHTML= ""
+                document.getElementById('car_model').style.borderColor=""
+                isCarModelValid=true
+                validate()
+            }
+        })
+
+        car_year.addEventListener('blur', function(){
+            var isCarYearEmpty= checkEmpty('car_year')
+
+            var car_year_string=car_year.value.toString()
+            if(!YEAR.test(car_year_string) ){
                 document.getElementById('car_year_error').innerHTML="Invalid year"
                 document.getElementById('car_year').style.borderColor="var(--error)"
-                submit.disabled=true
+                isCarYearValid=false
+                validate()
 
-            }
-            else if(id==='car_year' && idToCheck.value > 2024 ){
-                document.getElementById('car_year_error').innerHTML="the year has to be earlier "
+            } else if(isCarYearEmpty){
+                document.getElementById('car_year_error').innerHTML= "required"
                 document.getElementById('car_year').style.borderColor="var(--error)"
-                submit.disabled=true
+                isCarYearValid=false
+                validate()
             }
-            else{
-                document.getElementById(id_error).innerHTML= ""
-                document.getElementById(id).style.borderColor=''
-               isValid=true
-                
-               
-                
-                
+             else{
+                document.getElementById('car_year_error').innerHTML= ""
+                document.getElementById('car_year').style.borderColor=''
+                isCarYearValid=true
+                validate()
+
             }
+        })
 
-        });
+        purchase_date.addEventListener('blur', function(){
+            var isPurchaseDateEmpty=checkEmpty('purchase_date')
+            const date_today= new Date()
+            const date_input=new Date(purchase_date.value)
+            if(isPurchaseDateEmpty){
+                document.getElementById('purchase_date_error').innerHTML="required"
+                document.getElementById('purchase_date').style.borderColor="var(--error)"
+                isPurchaseDateValid=false
+                validate()
+            }
+            else if(date_input> date_today){
+                document.getElementById('purchase_date_error').innerHTML="the date can't be later than today"
+                document.getElementById('purchase_date').style.borderColor="var(--error)"
+                isPurchaseDateValid=false
+                validate()
+            } else{
+                document.getElementById('purchase_date_error').innerHTML= ""
+                document.getElementById('purchase_date').style.borderColor=''
+                isPurchaseDateValid=true
+                validate()
+            }
+        })
 
-        return isValid
+        review.addEventListener('blur', function(){
+            var isReviewEmpty=checkEmpty('review')
+            if(isReviewEmpty){
+                document.getElementById('review_error').innerHTML="required"
+                document.getElementById('review').style.borderColor="var(--error)"
+                isReviewValid=false
+                validate()
+            }
+            else if(review.value.length < 10 ){
+                document.getElementById('review_error').innerHTML="write at least 10 characters"
+                document.getElementById('review').style.borderColor="var(--error)"
+                isReviewValid=false
+                validate()
+            } else{
+                document.getElementById('review_error').innerHTML=""
+                document.getElementById('review').style.borderColor=""
+                isReviewValid=true
+                validate()
+
+            }
+        })
 
         
-
-    }
-  
-    //checkin if the input are empty
-    checkEmpty('car_make', 'car_make_error')
-    checkEmpty('car_model', 'car_model_error')
-    checkEmpty('car_year', 'car_year_error')
-    checkEmpty('purchase_date', "purchase_date_error")
-    checkEmpty('review', 'review_error')
+        function validate(){
+            if(isCarMakeValid && isCarModelValid && isCarYearValid && isPurchaseDateValid && isReviewValid){
+                submit.disabled=false
+            } else{
+                submit.disabled=true
+            }
+            
+        }
 
 
     
