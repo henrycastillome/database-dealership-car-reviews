@@ -38,6 +38,7 @@ urlpatterns = [
     path(route='postreview/<int:id>/', view=views.post_review, name='post_review'),
 
 
+
    
 
     # path for add a review view

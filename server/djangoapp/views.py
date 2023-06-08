@@ -119,11 +119,68 @@ def post_review(request, id):
     context={}
     if request.method=="GET":
         id={"id":id}
-        url='https://us-east.functions.appdomain.cloud/api/v1/web/bb38ac2a-c860-4a62-9d45-c9c576b3a2d0/dealership-package/get-dealership-id'
-        dealerships=get_dealers_by_id(url,id)
+        url_get='https://us-east.functions.appdomain.cloud/api/v1/web/bb38ac2a-c860-4a62-9d45-c9c576b3a2d0/dealership-package/get-dealership-id'
+        dealerships=get_dealers_by_id(url_get,id)
             
         return render(request, 'djangoapp/review_post.html', context={'dealerships':dealerships} )
+    
+    elif request.method=="POST":
+        url_get='https://us-east.functions.appdomain.cloud/api/v1/web/bb38ac2a-c860-4a62-9d45-c9c576b3a2d0/dealership-package/get-dealership-id'
+        url_post='https://us-east.functions.appdomain.cloud/api/v1/web/bb38ac2a-c860-4a62-9d45-c9c576b3a2d0/dealership-package/post-review'
+        name=request.POST.get('name', "")
+        dealership=request.POST.get('dealershipid',"")
+        car_make=request.POST['car_make']
+        car_model=request.POST['car_model']
+        car_year=request.POST['car_year']
+        purchase_date=request.POST['purchase_date']
+        purchase=request.POST['purchase']
+        review=request.POST.get('review')
+        
 
+        if(purchase=='yes'):
+            purchase=True
+        else:
+            purchase=False
+        
+        data_json={"reviews":
+                   {
+                       "name":name,
+                       "dealership":int(dealership),
+                       "car_make":car_make,
+                       "car_model":car_model,
+                       "car_year":int(car_year),
+                       "purchase_date":purchase_date,
+                       "purchase":purchase,
+                       "review":review
+
+                   }}
+        id_get={"id":dealership}
+        try:
+            response = post_requests_review(url_post, data_json)
+            
+            
+            print(response)
+            if(response['ok']):
+                messages.success(request, 'your review has been posted')
+
+                return redirect("djangoapp:dealer_details", id=dealership)
+                
+            else:
+                context['message']='error in the server-- try again later'
+                context['dealerships']= get_dealers_by_id(url_get, id_get)
+                
+                return render(request, 'djangoapp/review_post.html', context=context)
+            
+            
+        except Exception as e:
+            error_message = "An error occurred while posting the review: {}".format(str(e))
+            context['message']=error_message
+            context['dealerships']= get_dealers_by_id(url_get, id_get)
+                
+            return render(request, 'djangoapp/review_post.html', context=context)
+            
+
+    
 def get_dealer_review(request, id):
     context={}
     if request.method=="GET":
@@ -135,6 +192,9 @@ def get_dealer_review(request, id):
         dealerships=get_dealers_by_id(url2,id)
 
         return render(request, 'djangoapp/dealer_details.html', context={"reviews":reviews, "dealerships":dealerships})
+    
+    
+
 
 
 
