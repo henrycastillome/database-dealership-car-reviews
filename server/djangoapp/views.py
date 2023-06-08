@@ -9,6 +9,7 @@ from django.contrib import messages
 from datetime import datetime
 import logging
 import json
+import time
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
@@ -161,10 +162,13 @@ def post_review(request, id):
             
             print(response)
             if(response['ok']):
-                messages.success(request, 'your review has been posted')
-
-                return redirect("djangoapp:dealer_details", id=dealership)
                 
+
+                context['message']='Your review has been posted'
+                context['dealerships']= get_dealers_by_id(url_get, id_get)
+                messages.success(request,"Your post has been posted")
+
+                return redirect('djangoapp:dealer_details', id=dealership)
             else:
                 context['message']='error in the server-- try again later'
                 context['dealerships']= get_dealers_by_id(url_get, id_get)

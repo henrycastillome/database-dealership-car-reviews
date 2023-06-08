@@ -65,12 +65,10 @@
                     <textarea class="form-control"  name='review' id="review" rows="4"></textarea>
                     <small id="review_error"></small>
                 </div>
-                {% if messages %}
-                <ul class="messages">
-                    {% for message in messages %}
-                        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                    {% endfor %}
-                </ul>
+                {% if message %}
+                <div id="message" class="alert alert-success"> <!--Style the message paragraph with .alert and .alert-warning class -->
+                    {{ message }}
+                  </div>
 
                   {% endif %}
 
@@ -98,9 +96,6 @@
     let isCarYearValid=false
     let isPurchaseDateValid=false
     let isReviewValid=false
-    
-    var message=document.getElementById('message')
-
     
     
     
