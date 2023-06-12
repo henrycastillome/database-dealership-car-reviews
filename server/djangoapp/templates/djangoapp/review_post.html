@@ -1,232 +1,256 @@
 {% extends 'djangoapp/navbar.html' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Review{% endblock %}
 
 {% block content %}
 
-<section>
+<section style="padding: 2rem;">
     {% for dealer in dealerships%}
-            <form action="{% url 'djangoapp:post_review' id=dealer.id %}" method="post">
-               
-                {% csrf_token %}
-                <div class="form-group">
-                    <label for="name"> Name </label>
-                    <input name="name" class="form-control" readonly id="name" type="text" value="{{user.first_name}} {{user.last_name}}" style="font-weight: bold;">
-                </div>
+    <form action="{% url 'djangoapp:post_review' id=dealer.id %}" method="post">
 
-                <div class="form-group">
-                    <label for="dealership"> Dealership </label>
-                 
-                    <input name="dealership" class="form-control" id="dealership" type="text" value="{{dealer.full_name}}" readonly style="font-weight: bold;">
-                   
-                </div>
-                <div class="form-group">
-                    <label for="dealershipid"> Dealership ID </label>
-                 
-                    <input name="dealershipid" class="form-control" id="dealershipid" type="text" value="{{dealer.id}}" readonly style="font-weight: bold;">
-                   
-                </div>
-                
-                <div class="form-group">
-                    <label for="car_make">Car make</label>
-                    <input name="car_make"   class="form-control" id="car_make" type="text" >
-                    <small id="car_make_error" style="color: var(--error);"></small>
-                </div>
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="name"> Name </label>
+            <input name="name" class="form-control" readonly id="name" type="text"
+                value="{{user.first_name}} {{user.last_name}}" style="font-weight: bold;">
+        </div>
 
-                <div class="form-group">
-                    <label for="car_model">Car model</label>
-                    <input name="car_model"  class="form-control" id="car_model" type="text" >
-                    <small id="car_model_error" style="color: var(--error);"></small>
-                </div>
+        <div class="form-group">
+            <label for="dealership"> Dealership </label>
 
-                <div class="form-group">
-                    <label for="car_year">Car Year</label>
-                    <input name="car_year"   min="1900"  max="2024" step="1"  class="form-control" id="car_year" type="number" required>
-                    <small id="car_year_error" style="color: var(--error);"></small>
-                    
-                </div>
+            <input name="dealership" class="form-control" id="dealership" type="text" value="{{dealer.full_name}}"
+                readonly style="font-weight: bold;">
 
-                <div class="form-group">
-                    <label for="purchase_date">When did you visit the dealership?</label>
-                    <input name="purchase_date"  class="form-control" id="purchase_date" type="date" >
-                    <small id="purchase_date_error" style="color: var(--error);"></small>
-                </div>
+        </div>
+        <div class="form-group">
+            <label for="dealershipid"> Dealership ID </label>
 
-                <div class="form-group">
-                    <label for="purchase">Did you make any purchase? </label>
-                    <input name="purchase" checked id="yes" value="yes" type="radio" >
-                    <label for="yes"> Yes </label>
-                    <input name="purchase" id="no" value="no" type="radio" >
-                    <label for="no"> No </label>
-                </div>
+            <input name="dealershipid" class="form-control" id="dealershipid" type="text" value="{{dealer.id}}" readonly
+                style="font-weight: bold;">
 
-                <div class="form-group">
-                    <label for="review"> Leave your comments here </label>
-                    <textarea class="form-control"  name='review' id="review" rows="4"></textarea>
-                    <small id="review_error"></small>
-                </div>
-                {% if message %}
-                <div id="message" class="alert alert-success"> <!--Style the message paragraph with .alert and .alert-warning class -->
-                    {{ message }}
-                  </div>
+        </div>
 
-                  {% endif %}
+        <div class="form-group">
+            <label for="car_make">Car make</label>
+            <input name="car_make" class="form-control" id="car_make" type="text">
+            <small id="car_make_error" style="color: var(--error);"></small>
+        </div>
 
-                <div class="form-group">
-                    <button id="submitButton" disabled type="submit" class="btn btn-primary btn-block"> Submit review </button>
-                </div>
-                
-            </form>
-         
-            {% endfor %}
+        <div class="form-group">
+            <label for="car_model">Car model</label>
+            <input name="car_model" class="form-control" id="car_model" type="text">
+            <small id="car_model_error" style="color: var(--error);"></small>
+        </div>
+
+        <div class="form-group">
+            <label for="car_year">Car Year</label>
+            <input name="car_year" min="1900" max="2024" step="1" class="form-control" id="car_year" type="number">
+            <small id="car_year_error" style="color: var(--error);"></small>
+
+        </div>
+
+        <div class="form-group">
+            <label for="purchase_date">When did you visit the dealership?</label>
+            <input name="purchase_date" class="form-control" id="purchase_date" type="date">
+            <small id="purchase_date_error" style="color: var(--error);"></small>
+        </div>
+
+        <div class="form-group">
+            <label for="purchase">Did you make any purchase? </label>
+            <input name="purchase" checked id="yes" value="yes" type="radio">
+            <label for="yes"> Yes </label>
+            <input name="purchase" id="no" value="no" type="radio">
+            <label for="no"> No </label>
+        </div>
+
+        <div class="form-group">
+            <label for="review"> Leave your comments here </label>
+            <textarea class="form-control" name='review' id="review" rows="4"></textarea>
+            <small id="review_error"></small>
+        </div>
+        {% if message %}
+        <div id="message" class="alert alert-success">
+            <!--Style the message paragraph with .alert and .alert-warning class -->
+            {{ message }}
+        </div>
+
+        {% endif %}
+        <div class="form-group">
+            <button type="submit" id='submitButton' disabled class="btn btn-primary btn-block">
+                <span class="spinner-border spinner-border-sm" style="display: none;" id="myspinner" role="status"
+                    aria-hidden="true"></span>
+                Submit Review
+    
+            </button>
+        </div>
+
+
+    </form>
+
+
+  
+
+
+    {% endfor %}
 </section>
 
 
 <script>
-    var car_make=document.getElementById('car_make')
-    var car_model=document.getElementById('car_model')
-    var car_year=document.getElementById('car_year')
-    var purchase_date=document.getElementById('purchase_date')
-    var review=document.getElementById('review')
-    var submit=document.getElementById('submitButton')
-    var isValid=false
-    const YEAR=/(19[5-9][0-9]|20[0-1][0-9]|202[0-3])/
-    let isCarMakeValid=false
-    let isCarModelValid=false
-    let isCarYearValid=false
-    let isPurchaseDateValid=false
-    let isReviewValid=false
-    
-    
-    
-  
-    
+    var car_make = document.getElementById('car_make')
+    var car_model = document.getElementById('car_model')
+    var car_year = document.getElementById('car_year')
+    var purchase_date = document.getElementById('purchase_date')
+    var review = document.getElementById('review')
+    var submit = document.getElementById('submitButton')
+    var isValid = false
+    const YEAR = /(19[5-9][0-9]|20[0-1][0-9]|202[0-3])/
+    let isCarMakeValid = false
+    let isCarModelValid = false
+    let isCarYearValid = false
+    let isPurchaseDateValid = false
+    let isReviewValid = false
+   
+
+
+
+
+
     function checkEmpty(id) {
-            var idToCheck = document.getElementById(id)
-            let isValid = true
-            if (idToCheck.value === "") {
-                return isValid
-            } else {
-                return !isValid
-            }
+        var idToCheck = document.getElementById(id)
+        let isValid = true
+        if (idToCheck.value === "") {
+            return isValid
+        } else {
+            return !isValid
+        }
+    }
+
+    car_make.addEventListener('blur', function () {
+        var isCarMakeEmpty = checkEmpty('car_make')
+
+        if (isCarMakeEmpty) {
+            document.getElementById('car_make_error').innerHTML = "required"
+            document.getElementById('car_make').style.borderColor = "var(--error)"
+            isCarMakeValid = false
+            validate()
+        } else {
+            document.getElementById('car_make_error').innerHTML = ""
+            document.getElementById('car_make').style.borderColor = ""
+            isCarMakeValid = true
+            validate()
+        }
+    })
+
+    car_model.addEventListener('blur', function () {
+        var isCarMakeEmpty = checkEmpty('car_model')
+
+        if (isCarMakeEmpty) {
+            document.getElementById('car_model_error').innerHTML = "required"
+            document.getElementById('car_model').style.borderColor = "var(--error)"
+            isCarModelValid = false
+            validate()
+        } else {
+            document.getElementById('car_model_error').innerHTML = ""
+            document.getElementById('car_model').style.borderColor = ""
+            isCarModelValid = true
+            validate()
+        }
+    })
+
+    car_year.addEventListener('blur', function () {
+        var isCarYearEmpty = checkEmpty('car_year')
+
+        var car_year_string = car_year.value.toString()
+        if (!YEAR.test(car_year_string)) {
+            document.getElementById('car_year_error').innerHTML = "Invalid year"
+            document.getElementById('car_year').style.borderColor = "var(--error)"
+            isCarYearValid = false
+            validate()
+
+        } else if (isCarYearEmpty) {
+            document.getElementById('car_year_error').innerHTML = "required"
+            document.getElementById('car_year').style.borderColor = "var(--error)"
+            isCarYearValid = false
+            validate()
+        }
+        else {
+            document.getElementById('car_year_error').innerHTML = ""
+            document.getElementById('car_year').style.borderColor = ''
+            isCarYearValid = true
+            validate()
+
+        }
+    })
+
+    purchase_date.addEventListener('blur', function () {
+        var isPurchaseDateEmpty = checkEmpty('purchase_date')
+        const date_today = new Date()
+        const date_input = new Date(purchase_date.value)
+        if (isPurchaseDateEmpty) {
+            document.getElementById('purchase_date_error').innerHTML = "required"
+            document.getElementById('purchase_date').style.borderColor = "var(--error)"
+            isPurchaseDateValid = false
+            validate()
+        }
+        else if (date_input > date_today) {
+            document.getElementById('purchase_date_error').innerHTML = "the date can't be later than today"
+            document.getElementById('purchase_date').style.borderColor = "var(--error)"
+            isPurchaseDateValid = false
+            validate()
+        } else {
+            document.getElementById('purchase_date_error').innerHTML = ""
+            document.getElementById('purchase_date').style.borderColor = ''
+            isPurchaseDateValid = true
+            validate()
+        }
+    })
+
+    review.addEventListener('blur', function () {
+        var isReviewEmpty = checkEmpty('review')
+        if (isReviewEmpty) {
+            document.getElementById('review_error').innerHTML = "required"
+            document.getElementById('review').style.borderColor = "var(--error)"
+            isReviewValid = false
+            validate()
+        }
+        else if (review.value.length < 20) {
+            document.getElementById('review_error').innerHTML = "write at least 20 characters"
+            document.getElementById('review').style.borderColor = "var(--error)"
+            isReviewValid = false
+            validate()
+        } else {
+            document.getElementById('review_error').innerHTML = ""
+            document.getElementById('review').style.borderColor = ""
+            isReviewValid = true
+            validate()
+
+        }
+    })
+
+
+    function validate() {
+        if (isCarMakeValid && isCarModelValid && isCarYearValid && isPurchaseDateValid && isReviewValid) {
+            submit.disabled = false
+        } else {
+            submit.disabled = true
         }
 
-        car_make.addEventListener('blur', function(){
-            var isCarMakeEmpty=checkEmpty('car_make')
-
-            if(isCarMakeEmpty){
-                document.getElementById('car_make_error').innerHTML= "required"
-                document.getElementById('car_make').style.borderColor="var(--error)"
-                isCarMakeValid=false
-                validate()
-            } else{
-                document.getElementById('car_make_error').innerHTML= ""
-                document.getElementById('car_make').style.borderColor=""
-                isCarMakeValid=true
-                validate()
-            }
-        })
-
-        car_model.addEventListener('blur', function(){
-            var isCarMakeEmpty=checkEmpty('car_model')
-
-            if(isCarMakeEmpty){
-                document.getElementById('car_model_error').innerHTML= "required"
-                document.getElementById('car_model').style.borderColor="var(--error)"
-                isCarModelValid=false
-                validate()
-            } else{
-                document.getElementById('car_model_error').innerHTML= ""
-                document.getElementById('car_model').style.borderColor=""
-                isCarModelValid=true
-                validate()
-            }
-        })
-
-        car_year.addEventListener('blur', function(){
-            var isCarYearEmpty= checkEmpty('car_year')
-
-            var car_year_string=car_year.value.toString()
-            if(!YEAR.test(car_year_string) ){
-                document.getElementById('car_year_error').innerHTML="Invalid year"
-                document.getElementById('car_year').style.borderColor="var(--error)"
-                isCarYearValid=false
-                validate()
-
-            } else if(isCarYearEmpty){
-                document.getElementById('car_year_error').innerHTML= "required"
-                document.getElementById('car_year').style.borderColor="var(--error)"
-                isCarYearValid=false
-                validate()
-            }
-             else{
-                document.getElementById('car_year_error').innerHTML= ""
-                document.getElementById('car_year').style.borderColor=''
-                isCarYearValid=true
-                validate()
-
-            }
-        })
-
-        purchase_date.addEventListener('blur', function(){
-            var isPurchaseDateEmpty=checkEmpty('purchase_date')
-            const date_today= new Date()
-            const date_input=new Date(purchase_date.value)
-            if(isPurchaseDateEmpty){
-                document.getElementById('purchase_date_error').innerHTML="required"
-                document.getElementById('purchase_date').style.borderColor="var(--error)"
-                isPurchaseDateValid=false
-                validate()
-            }
-            else if(date_input> date_today){
-                document.getElementById('purchase_date_error').innerHTML="the date can't be later than today"
-                document.getElementById('purchase_date').style.borderColor="var(--error)"
-                isPurchaseDateValid=false
-                validate()
-            } else{
-                document.getElementById('purchase_date_error').innerHTML= ""
-                document.getElementById('purchase_date').style.borderColor=''
-                isPurchaseDateValid=true
-                validate()
-            }
-        })
-
-        review.addEventListener('blur', function(){
-            var isReviewEmpty=checkEmpty('review')
-            if(isReviewEmpty){
-                document.getElementById('review_error').innerHTML="required"
-                document.getElementById('review').style.borderColor="var(--error)"
-                isReviewValid=false
-                validate()
-            }
-            else if(review.value.length < 10 ){
-                document.getElementById('review_error').innerHTML="write at least 10 characters"
-                document.getElementById('review').style.borderColor="var(--error)"
-                isReviewValid=false
-                validate()
-            } else{
-                document.getElementById('review_error').innerHTML=""
-                document.getElementById('review').style.borderColor=""
-                isReviewValid=true
-                validate()
-
-            }
-        })
-
-        
-        function validate(){
-            if(isCarMakeValid && isCarModelValid && isCarYearValid && isPurchaseDateValid && isReviewValid){
-                submit.disabled=false
-            } else{
-                submit.disabled=true
-            }
-            
-        }
+    }
 
 
-    
+
+    submit.addEventListener('click', function () {
+        console.log('submit button clicked', event)
+       
+        submit.innerHTML=`<span class="spinner-border spinner-border-sm"   role="status"
+                aria-hidden="true"></span> Submitting...`;
+
+
+
+    })
+
+
 </script>
 
 
 {% endblock %}
-

@@ -4,6 +4,7 @@
 
 {% block content %}
 
+
 {% if user.is_authenticated %}
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
   <h1 class="display-4">Welcome {{ user.first_name }}!</h1>
@@ -50,12 +51,14 @@
     <div class="col-12">
       <form method="get" action="{% url 'djangoapp:search_result'  %}">
         <div class="input-group input-group-lg mb-3">
-          <input type="search" value="{{ request.GET.search }}" name='search' class="form-control"
+          <input type="search" id="search" value="{{ request.GET.search }}" name='search' class="form-control"
             placeholder="Search Dealership..." aria-label="Search" aria-describedby="search">
-          <button type="submit" value="Submit" class="btn btn-outline-primary">Search</button>
+          <button type="submit" id="btn" value="Submit" onclick="showLoader()" class="btn btn-outline-primary">Search</button>
         </div>
 
       </form>
+
+      
 
 
     </div>
@@ -69,7 +72,7 @@
         <div class="card-body">
           <h5 class="card-title">{{dealer.full_name}}</h5>
           <p class="card-text">{{dealer.address}}, {{dealer.city}}, {{dealer.st}}, {{dealer.zip}}</p>
-          <a href="{% url 'djangoapp:dealer_details' id=dealer.id %}" class="btn btn-primary">View info</a>
+          <a href="{% url 'djangoapp:dealer_details' id=dealer.id %}" onclick="showLoader()" class="btn btn-primary">View info</a>
         </div>
 
       </div>
@@ -90,21 +93,17 @@
     <div class="hero-text">
       <h1>Welcome to CarDealershipReview</h1>
       <p> your ultimate destination for honest and comprehensive reviews of car dealerships</p>
-      <a href="{% url 'djangoapp:registration' %}"><button type="button"
+      <a style="padding-bottom: 2rem;" onclick="showLoader()" href="{% url 'djangoapp:registration' %}"><button type="button"
           class="btn btn-outline-primary btn-rounded hero-button">
           GET STARTED
         </button>
       </a>
+      <img src="{{MEDIA_URL}}/dealer_images/download.svg" width="100px"/>
 
     </div>
 
 
-    <!-- <div class="col-sm-4 ">
-      <img width="400px" class='rounded img-fluid' src="{{ MEDIA_URL }}dealer_images/dogimage.jpg" >
-     
-    </div> -->
-
-
+   
 
   </div>
 </section>

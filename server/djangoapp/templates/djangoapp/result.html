@@ -17,7 +17,7 @@
         <div class="input-group input-group-lg mb-3">
           <input type="search" value="{{ request.GET.search }}" name='search' class="form-control"
             placeholder="Search Dealership..." aria-label="Search" aria-describedby="search">
-          <button type="submit" value="Submit" class="btn btn-outline-primary">Search</button>
+          <button type="submit" value="Submit" onclick='showLoader()' class="btn btn-outline-primary">Search</button>
         </div>
 
       </form>
@@ -42,7 +42,7 @@
         <div class="card-body">
           <h5 class="card-title">{{dealer.full_name}}</h5>
           <p class="card-text">{{dealer.address}}, {{dealer.city}}, {{dealer.st}}, {{dealer.zip}}</p>
-          <a href="{% url 'djangoapp:dealer_details' id=dealer.id %}" class="btn btn-primary">View info</a>
+          <a href="{% url 'djangoapp:dealer_details' id=dealer.id %}" onclick="showLoader()" class="btn btn-primary">View info</a>
         </div>
 
       </div>
@@ -70,7 +70,7 @@
 <div class="container">
   <div class="row">
     
-      <a href="{% url 'djangoapp:index' %}" >Back to all dealerships</a>
+      <a href="{% url 'djangoapp:index' %}" onclick="showLoader()" >Back to all dealerships</a>
     
   </div>
 </div>

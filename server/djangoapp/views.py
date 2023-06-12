@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, render, redirect
 from .models import *
 from .restapis import *
+from .forms import ContactForm
+from django.core.mail import send_mail, BadHeaderError
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from datetime import datetime
@@ -30,7 +32,28 @@ def contact(request):
     context={}
     if request.method=="GET":
         return render(request, 'djangoapp/contact.html', context)
+    elif request.method=="POST":
+        form=ContactForm(request.POST)
+        if form.is_valid():
+            subject='Website inquiry'
+            name=request.POST['name']
+            email=request.POST['email']
+            message=request.POST['message']
 
+            body={
+                'name':name,
+                'email':email,
+                'message':message
+            }
+            message="\n".join(body.values())
+
+            try:
+                send_mail(subject, message, "henrycastillome@gmail.com", ['henrycastillome@gmail.com'])
+            except BadHeaderError:
+                return HttpResponse('Invalid')
+            return redirect('djangoapp:index')
+    form=ContactForm()
+    return render(request, 'djangoapp/contact.html', {'form':form})
 
     
 def login_request(request):

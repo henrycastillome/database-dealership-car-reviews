@@ -1,19 +1,21 @@
 {% extends 'djangoapp/navbar.html' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Dealer Details{% endblock %}
 
 {% block content %}
 
 {% if messages %}
 
     {% for message in messages %}
-    <script>alert('{{message}}')</script>
+
+  
+    <script>new swal({title:"Review", text:'{{message}}', icon:'success', confirmButtonColor:'#007bff', confirmButtonText:"OK"}) </script>
     {% endfor %}
 
 {% endif %}
 
 {%for dealer in dealerships %}
-<section>
+<section style="padding: 2rem;">
     <div class="py-5">
         <div class="row">
             <div class="col">
@@ -122,11 +124,22 @@
                                                 <p class="fw-bold lead mb-2"><strong>{{review.name}}</strong></p>
                                                 {% if review.purchase %}
                                                 <p class="fw-bold text-muted mb-0"><b>Purchase date:</b> {{review.purchase_date}}</p>
-                                                <p class="fw-bold text-muted mb-0"><b>Car info: </b> {{review.car_make}} {{review.car_model}} - {{review.car_year}}</p>
-                                                <p class="fw-bold text-muted mb-0"><b>Sentiment: </b> {{review.sentiment}}</p>
+                                                <p class="fw-bold text-muted mb-0 pb-1"><b>Car info: </b> {{review.car_make}} {{review.car_model}} - {{review.car_year}}</p>
+                                               
+                                                {% if review.sentiment == "positive" %}
+                                                <img src="{{MEDIA_URL}}/emoji/positive.png" width="50px" />
+                                                {% else %}
+                                                <img src="{{MEDIA_URL}}/emoji/negative.png" width="50px" />
+                                                {% endif %}
                                                 {% else %}
                                                 <p class="fw-bold text-muted mb-0">No purchase made</p>
-                                                <p class="fw-bold text-muted mb-0"><b>Sentiment: </b> {{review.sentiment}}</p>
+
+                                              
+                                                {% if review.sentiment == "positive" %}
+                                                <img src="{{MEDIA_URL}}/emoji/positive.png" width="50px" />
+                                                {% else %}
+                                                <img src="{{MEDIA_URL}}/emoji/negative.png" width="50px" />
+                                                {% endif %}
                                                 {% endif %}
                                             </div>
                                         </div>
