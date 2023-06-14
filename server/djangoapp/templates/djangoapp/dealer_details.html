@@ -126,20 +126,25 @@
                                                 <p class="fw-bold text-muted mb-0"><b>Purchase date:</b> {{review.purchase_date}}</p>
                                                 <p class="fw-bold text-muted mb-0 pb-1"><b>Car info: </b> {{review.car_make}} {{review.car_model}} - {{review.car_year}}</p>
                                                
-                                                {% if review.sentiment == "positive" %}
-                                                <img src="{{MEDIA_URL}}/emoji/positive.png" width="50px" />
-                                                {% else %}
-                                                <img src="{{MEDIA_URL}}/emoji/negative.png" width="50px" />
-                                                {% endif %}
+                                                    {% if review.sentiment == "positive" %}
+                                                    <img src="{{MEDIA_URL}}/emoji/positive.png" width="50px" />
+                                                    {% elif review.sentiment == "neutral" %}
+                                                    <img src="{{MEDIA_URL}}/emoji/neutral.png" width="50px" />
+                                                    {% else %}
+                                                    <img src="{{MEDIA_URL}}/emoji/negative.png" width="50px" />
+                                                    {% endif %}
+                                                   
                                                 {% else %}
                                                 <p class="fw-bold text-muted mb-0">No purchase made</p>
 
                                               
-                                                {% if review.sentiment == "positive" %}
-                                                <img src="{{MEDIA_URL}}/emoji/positive.png" width="50px" />
-                                                {% else %}
-                                                <img src="{{MEDIA_URL}}/emoji/negative.png" width="50px" />
-                                                {% endif %}
+                                                    {% if review.sentiment == "positive" %}
+                                                    <img src="{{MEDIA_URL}}/emoji/positive.png" width="50px" />
+                                                    {% elif review.sentiment == "neutral" %}
+                                                    <img src="{{MEDIA_URL}}/emoji/neutral.png" width="50px" />
+                                                    {% else %}
+                                                    <img src="{{STATIC_URL}} media/emoji/negative.png" width="50px" />
+                                                    {% endif %}
                                                 {% endif %}
                                             </div>
                                         </div>
