@@ -21,9 +21,9 @@ body{
   
 }
 
-main{
-    padding-bottom: 2rem;
-    /* margin: 2rem; */
+.template{
+    padding:3rem 4rem 7rem 4rem
+ 
 }
 
 
@@ -51,7 +51,7 @@ display: none;
 
 .hero{
     width: 100vw;
-    height: 50vh;
+    height: 70vh;
     background-size: cover;
     background-position: center;
     position:relative;
@@ -84,7 +84,7 @@ display: none;
 }
 
 .subtitle{
-    padding-bottom: 3rem;
+    padding-bottom: 1.5rem;
     text-align: center;
 }
 
@@ -129,6 +129,16 @@ display: none;
     border: 1px solid #3e549a;
     text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.3);
   }
+
+.about-us{
+    margin-left: 6rem;
+    margin-right: 6rem;
+}
+
+.about-us-main{
+    background-color: var(--background-light);
+}
+
   
 
  
