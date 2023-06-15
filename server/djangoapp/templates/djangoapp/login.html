@@ -31,11 +31,28 @@
                     </div> <!-- checkbox .// -->
                 </div> <!-- form-group// -->
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block"> Login </button>
+                    <span class="spinner-border spinner-border-sm" style="display: none;" id="myspinner" role="status"
+                    aria-hidden="true"></span>
+                    <button type="submit" id="submitButton" class="btn btn-primary btn-block"> Login </button>
                 </div> <!-- form-group// -->
             </form>
         </article>
     </div> <!-- card.// -->
 
 </div> <!-- col.// -->
+
+<script>
+    var submit=document.getElementById('submitButton')
+    
+    submit.addEventListener('click', function () {
+        console.log('submit button clicked', event)
+       
+        submit.innerHTML=`<span class="spinner-border spinner-border-sm"   role="status"
+                aria-hidden="true"></span> Loging in...`;
+
+
+
+    })
+
+</script>
 {% endblock %}

@@ -28,10 +28,27 @@
         <textarea class="form-control" name="message" id="message" type="text" placeholder="Message" style="height: 10rem;" data-sb-validations="required"></textarea>
       </div>
       <div class="d-grid ">
-      <button type="submit" class="btn btn-primary btn-block">Submit</button>
+        <span class="spinner-border spinner-border-sm" style="display: none;" id="myspinner" role="status"
+                    aria-hidden="true"></span>
+      <button type="submit" id="submitButton" class="btn btn-primary btn-block">Submit</button>
     </div>
     </form>
   </div>
 
 </section>
+
+<script>
+  var submit=document.getElementById('submitButton')
+  
+  submit.addEventListener('click', function () {
+      console.log('submit button clicked', event)
+     
+      submit.innerHTML=`<span class="spinner-border spinner-border-sm"   role="status"
+              aria-hidden="true"></span> Submitting.....`;
+
+
+
+  })
+
+</script>
 {% endblock %}

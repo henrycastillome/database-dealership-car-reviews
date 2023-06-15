@@ -49,6 +49,8 @@
               {% endif %}
                 <!-- form-group// -->
                 <div class="form-group">
+                    <span class="spinner-border spinner-border-sm" style="display: none;" id="myspinner" role="status"
+                    aria-hidden="true"></span>
                     <button id="submitButton" disabled type="submit" class="btn btn-primary btn-block"> Sign up </button>
                 </div> <!-- form-group// -->
             </form>
@@ -91,8 +93,13 @@
             }
         }
 
+        
 
-
+        submit.addEventListener('click', function(){
+            console.log('sign up button clicked')
+            submit.innerHTML=`<span class="spinner-border spinner-border-sm"   role="status"
+                aria-hidden="true"></span> Signing up...`;
+        })
        
     
         
